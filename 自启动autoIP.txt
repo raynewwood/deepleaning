@@ -57,49 +57,6 @@ sudo systemctl start rc-local.service
 sudo systemctl status rc-local.service
 
 
-
-autoIP的内容
-#coding=utf-8
-import yagmail
-import time
-import urllib.request
-import subprocess
-import requests
-# 检查网络连通性
-def check_network():
-    while True:
-        try:
-            result=urllib.request.urlopen('http://www.baidu.com')
-            print (result)
-            print ("Network is Ready!")
-            break
-        except Exception as e:
-            print (e)
-            print ("Network is not ready,Sleep 5s...")
-            time.sleep(5)
-    return True
-# 运行ifconfig命令行，返回信息
-def ifconfig():
-    result=requests.get(url="http://ip.42.pl/raw").text
-    return result
-# 发送邮件
-def sendEmail():
-    check_network()
-    yag = yagmail.SMTP(
-        user = "XXX@XX.com",   # 发件人邮箱
-        password='XXXX',  # 授权码
-        host = 'smtp.qq.com')
-    #邮件内容
-    contents = [ifconfig(),'#===========分页符===========#']
-    yag.send(to = 'XX@XX.com',# 收件人邮箱
-             subject = 'deep learning station',  # 邮件主题
-             contents = contents)
-
-if  __name__ == '__main__' :
-    sendEmail()
-
-
-
 设置每2小时运行一次
 
 crontab -e
