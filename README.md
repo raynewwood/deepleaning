@@ -1,0 +1,98 @@
+# deeplearning
+video, picture andtime
+
+
+
+1、建立rc-local.service文件
+sudo gedit /etc/systemd/system/rc-local.service
+
+2、将下列内容复制进rc-local.service文件
+[Unit]
+Description=/etc/rc.local Compatibility
+ConditionPathExists=/etc/rc.local
+ 
+[Service]
+Type=forking
+ExecStart=/etc/rc.local start
+TimeoutSec=0
+StandardOutput=tty
+RemainAfterExit=yes
+SysVStartPriority=99
+ 
+[Install]
+WantedBy=multi-user.target
+
+3、创建文件rc.local
+sudo gedit /etc/rc.local
+
+4、将下列内容复制进rc.local文件
+
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+# print the IP address
+_IP=$(hostname -I)||true
+if ["$_IP"]; then
+  printf"My IP address is %s\n""$_IP"
+fi
+
+sudo /usr/bin/python3 /home/deep/autoIP.py
+
+exit 0
+
+5、给rc.local加上权限
+
+sudo chmod +x /etc/rc.local
+
+6、启用服务
+sudo systemctl enable rc-local
+
+7、启动服务并检查状态
+
+sudo systemctl start rc-local.service
+sudo systemctl status rc-local.service
+
+
+设置每2小时运行一次
+
+crontab -e
+在键盘上键入“O”开始输入状态
+按“ERC”键进入命令状态
+输入“:wq”表示写入 退出，完成编辑
+0 */2 * * * /usr/bin/python3 /home/nll/autoIP.py
+检查状态
+crontab -l
+此时的显示应该是
+# Edit this file to introduce tasks to be run by cron.
+# 
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+# 
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').# 
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+# 
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+# 
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+# 
+# For more information see the manual pages of crontab(5) and cron(8)
+# 
+# m h  dom mon dow   command
+0 */2 * * * /usr/bin/python3 /home/nll/autoIP.py
+
