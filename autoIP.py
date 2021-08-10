@@ -33,8 +33,8 @@ def ifconfig():
 def sendEmail():
     check_network()
     yag = yagmail.SMTP(
-        user = "raynewwood@qq.com",   # 发件人邮箱
-        password='tndfhdnhanmvdbje',  # 授权码
+        user = "XXXX@qq.com",   # 发件人邮箱
+        password='XXXX',  # 授权码
         host = 'smtp.qq.com')
     #邮件内容
     contents = ['服务器IP地址:\n',ifconfig(),'#===========分页符===========#', iwconfig()]
