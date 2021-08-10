@@ -86,12 +86,12 @@ def ifconfig():
 def sendEmail():
     check_network()
     yag = yagmail.SMTP(
-        user = "raynewwood@qq.com",   # 发件人邮箱
-        password='tndfhdnhanmvdbje',  # 授权码
+        user = "XXX@XX.com",   # 发件人邮箱
+        password='XXXX',  # 授权码
         host = 'smtp.qq.com')
     #邮件内容
     contents = [ifconfig(),'#===========分页符===========#']
-    yag.send(to = '1002887385@qq.com',# 收件人邮箱
+    yag.send(to = 'XX@XX.com',# 收件人邮箱
              subject = 'deep learning station',  # 邮件主题
              contents = contents)
 
